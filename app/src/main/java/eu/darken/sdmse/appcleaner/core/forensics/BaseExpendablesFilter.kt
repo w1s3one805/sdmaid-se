@@ -2,17 +2,23 @@ package eu.darken.sdmse.appcleaner.core.forensics
 
 import eu.darken.sdmse.common.debug.Bugs
 import eu.darken.sdmse.common.debug.logging.Logging.Priority.ERROR
+import eu.darken.sdmse.common.debug.logging.Logging.Priority.INFO
+import eu.darken.sdmse.common.debug.logging.Logging.Priority.VERBOSE
 import eu.darken.sdmse.common.debug.logging.Logging.Priority.WARN
 import eu.darken.sdmse.common.debug.logging.log
 import eu.darken.sdmse.common.debug.logging.logTag
 import eu.darken.sdmse.common.files.APathLookup
 import eu.darken.sdmse.common.files.GatewaySwitch
-import eu.darken.sdmse.common.files.WriteException
-import eu.darken.sdmse.common.files.deleteAll
+import eu.darken.sdmse.common.files.PathException
+import eu.darken.sdmse.common.files.delete
+import eu.darken.sdmse.common.files.exists
 import eu.darken.sdmse.common.files.filterDistinctRoots
+import eu.darken.sdmse.common.files.isAncestorOf
 import eu.darken.sdmse.common.flow.throttleLatest
 import eu.darken.sdmse.common.progress.Progress
-import eu.darken.sdmse.common.progress.updateProgressSecondary
+import eu.darken.sdmse.common.progress.increaseProgress
+import eu.darken.sdmse.common.progress.updateProgressCount
+import eu.darken.sdmse.common.progress.updateProgressPrimary
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -25,45 +31,89 @@ abstract class BaseExpendablesFilter : ExpendablesFilter {
         progressPub.value = update(progressPub.value)
     }
 
-    suspend fun Collection<ExpendablesFilter.Match>.deleteAll(
-        gatewaySwitch: GatewaySwitch
-    ): ExpendablesFilter.ProcessResult = this
-        .map { it as ExpendablesFilter.Match.Deletion }
-        .let { deletionMatches ->
-            val success = mutableSetOf<ExpendablesFilter.Match.Deletion>()
-            val failed = mutableSetOf<Pair<ExpendablesFilter.Match.Deletion, Exception>>()
+    suspend fun deleteAll(
+        targets: Collection<ExpendablesFilter.Match.Deletion>,
+        gatewaySwitch: GatewaySwitch,
+        allMatches: Collection<ExpendablesFilter.Match>,
+    ): ExpendablesFilter.ProcessResult {
+        log(TAG, INFO) { "deleteAll(...) Processing ${targets.size} out of ${allMatches.size} matches" }
+        updateProgressPrimary(eu.darken.sdmse.common.R.string.general_progress_preparing)
+        val successful = mutableSetOf<ExpendablesFilter.Match>()
+        val failed = mutableSetOf<Pair<ExpendablesFilter.Match, Exception>>()
 
-            val distinctRoots = deletionMatches.map { it.lookup }.filterDistinctRoots()
+        val distinctRoots = targets.map { it.lookup }.filterDistinctRoots()
 
-            if (distinctRoots.size != deletionMatches.size) {
-                log(WARN) { "${deletionMatches.size} match objects but only ${distinctRoots.size} distinct roots" }
-                if (Bugs.isDebug) {
-                    deletionMatches
-                        .filter { !distinctRoots.contains(it.lookup) }
-                        .forEachIndexed { index, item -> log(WARN) { "Non distinct root #$index: $item" } }
-                }
+        if (distinctRoots.size != targets.size) {
+            log(TAG, INFO) { "${targets.size} match objects but only ${distinctRoots.size} distinct roots" }
+            if (Bugs.isTrace) {
+                targets
+                    .filter { !distinctRoots.contains(it.lookup) }
+                    .forEachIndexed { index, item -> log(TAG, INFO) { "Non distinct root #$index: $item" } }
             }
-
-            distinctRoots.forEach { targetContent ->
-                updateProgressSecondary(targetContent.userReadablePath)
-                val originalmatch = deletionMatches.first { it.lookup == targetContent }
-                try {
-                    targetContent.deleteAll(gatewaySwitch)
-                    success.add(originalmatch)
-                } catch (e: WriteException) {
-                    log(logTag("AppCleaner,BaseExpendablesFilter"), ERROR) {
-                        "Failed to delete $originalmatch due to $e"
-                    }
-                    failed.add(originalmatch to e)
-                }
-            }
-
-            ExpendablesFilter.ProcessResult(
-                success = success,
-                failed = failed,
-            )
         }
+
+        updateProgressCount(Progress.Count.Percent(distinctRoots.size))
+
+        distinctRoots.forEach { targetRoot ->
+            updateProgressPrimary(targetRoot.userReadablePath)
+            val main = targets.first { it.lookup == targetRoot }
+
+            val mainDeleted = try {
+                targetRoot.delete(gatewaySwitch, recursive = true)
+                log(TAG) { "Main match deleted: $main" }
+                true
+            } catch (oge: PathException) {
+                try {
+                    if (targetRoot.exists(gatewaySwitch)) {
+                        log(TAG, WARN) { "Deletion failed, file still exists" }
+                        failed.add(main to oge)
+                        false
+                    } else {
+                        log(TAG, WARN) { "Deletion failed as file no longer exists, okay..." }
+                        true
+                    }
+                } catch (e: PathException) {
+                    log(TAG, ERROR) { "Post-deletion-failure-exist check failed too on $main\n $e" }
+                    failed.add(main to e)
+                    false
+                }
+            }
+
+            // deleteAll(...) starts at leafs, children may have been deleted, even if the top-level dir wasn't
+            val affected = allMatches.filter { it != main && main.lookup.isAncestorOf(it.lookup) }
+            if (Bugs.isTrace) {
+                log(TAG) { "$main affects ${affected.size} other matches" }
+                affected.forEach { log(TAG, VERBOSE) { "Affected: $it" } }
+            }
+
+            if (mainDeleted) {
+                successful.add(main)
+                successful.addAll(affected)
+                log(TAG) { "Main match and affected files deleted" }
+            } else {
+                log(TAG, WARN) { "Main match failed to delete, checking what still exists" }
+                affected.forEach { subMatch ->
+                    if (subMatch.path.exists(gatewaySwitch)) {
+                        log(TAG, WARN) { "Sub match still exists: $subMatch" }
+                    } else {
+                        log(TAG, INFO) { "Sub match no longer exists: $subMatch" }
+                        successful.add(subMatch)
+                    }
+                }
+            }
+            increaseProgress()
+        }
+
+        return ExpendablesFilter.ProcessResult(
+            success = successful,
+            failed = failed,
+        )
+    }
 
     suspend fun APathLookup<*>.toDeletionMatch() = ExpendablesFilter.Match.Deletion(identifier, this)
 
+
+    companion object {
+        private val TAG = logTag("AppCleaner", "BaseExpendablesFilter")
+    }
 }

@@ -8,6 +8,7 @@ import eu.darken.sdmse.common.debug.logging.asLog
 import eu.darken.sdmse.common.debug.logging.log
 import eu.darken.sdmse.common.debug.logging.logTag
 import eu.darken.sdmse.common.files.local.ipc.FileOpsClient
+import eu.darken.sdmse.common.flow.setupCommonEventHandlers
 import eu.darken.sdmse.common.ipc.IpcClientModule
 import eu.darken.sdmse.common.pkgs.pkgops.ipc.PkgOpsClient
 import eu.darken.sdmse.common.root.RootSettings
@@ -19,9 +20,11 @@ import eu.darken.sdmse.common.sharedresource.SharedResource
 import eu.darken.sdmse.common.shell.ipc.ShellOpsClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
@@ -46,18 +49,18 @@ class RootServiceClient @Inject constructor(
         log(TAG) { "Instantiating Root launcher..." }
         if (rootSettings.useRoot.value() != true) throw RootUnavailableException("Root is not enabled")
 
-        val options = RootHostOptions(
+        val initialOptions = RootHostOptions(
             isDebug = debugSettings.isDebugMode.value(),
             isTrace = debugSettings.isTraceMode.value(),
             isDryRun = debugSettings.isDryRunMode.value(),
             recorderPath = debugSettings.recorderPath.value(),
         )
 
-        var lastInternal: RootConnection? = null
+        val lastInternal = MutableStateFlow<RootConnection?>(null)
         rootHostLauncher
-            .createHostConnection(options = options)
+            .createHostConnection(options = initialOptions)
             .onEach { wrapper ->
-                lastInternal = wrapper.host
+                lastInternal.value = wrapper.host
                 send(wrapper.service)
             }
             .launchIn(this)
@@ -66,19 +69,20 @@ class RootServiceClient @Inject constructor(
             debugSettings.isDebugMode.flow,
             debugSettings.isTraceMode.flow,
             debugSettings.isDryRunMode.flow,
-            debugSettings.recorderPath.flow
-        ) { isDebug, isTrace, isDryRun, recorderPath ->
-            lastInternal?.let {
-                val options = RootHostOptions(
-                    isDebug = isDebug,
-                    isTrace = isTrace,
-                    isDryRun = isDryRun,
-                    recorderPath = recorderPath,
-                )
-                log(TAG) { "Updating debug settings: $options" }
-                it.updateHostOptions(options)
-            }
-        }.launchIn(this)
+            debugSettings.recorderPath.flow,
+            lastInternal.filterNotNull(),
+        ) { isDebug, isTrace, isDryRun, recorderPath, lastConnection ->
+            val dynamicOptions = RootHostOptions(
+                isDebug = isDebug,
+                isTrace = isTrace,
+                isDryRun = isDryRun,
+                recorderPath = recorderPath,
+            )
+            log(TAG) { "Updating debug settings: $dynamicOptions" }
+            lastConnection.updateHostOptions(dynamicOptions)
+        }
+            .setupCommonEventHandlers(TAG) { "dynamic-debug-settings" }
+            .launchIn(this)
 
         log(TAG) { "awaitClose()..." }
         awaitClose {

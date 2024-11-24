@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import coil.ImageLoader
 import coil.decode.DataSource
-import coil.decode.ImageSource
 import coil.fetch.DrawableResult
 import coil.fetch.FetchResult
 import coil.fetch.Fetcher
@@ -22,11 +21,11 @@ import eu.darken.sdmse.common.files.extension
 import eu.darken.sdmse.common.files.iconRes
 import eu.darken.sdmse.common.files.local.LocalPath
 import eu.darken.sdmse.main.core.GeneralSettings
-import okio.buffer
 import javax.inject.Inject
 
 class PathPreviewFetcher @Inject constructor(
     @ApplicationContext private val context: Context,
+    private val coilTempFiles: CoilTempFiles,
     private val generalSettings: GeneralSettings,
     private val gatewaySwitch: GatewaySwitch,
     private val mimeTypeTool: MimeTypeTool,
@@ -54,9 +53,10 @@ class PathPreviewFetcher @Inject constructor(
 
         return when {
             mimeType.startsWith("image") || mimeType.startsWith("video") -> {
-                val buffer = gatewaySwitch.read(data.lookedUp).buffer()
+                val handle = gatewaySwitch.file(data.lookedUp, readWrite = false)
+
                 SourceResult(
-                    ImageSource(buffer, context),
+                    handle.toImageSource(coilTempFiles.getBaseCachePath()),
                     mimeType,
                     dataSource = DataSource.DISK
                 )
@@ -91,6 +91,7 @@ class PathPreviewFetcher @Inject constructor(
 
     class Factory @Inject constructor(
         @ApplicationContext private val context: Context,
+        private val coilTempFiles: CoilTempFiles,
         private val generalSettings: GeneralSettings,
         private val gatewaySwitch: GatewaySwitch,
         private val mimeTypeTool: MimeTypeTool,
@@ -100,7 +101,15 @@ class PathPreviewFetcher @Inject constructor(
             data: APathLookup<*>,
             options: Options,
             imageLoader: ImageLoader
-        ): Fetcher = PathPreviewFetcher(context, generalSettings, gatewaySwitch, mimeTypeTool, data, options)
+        ): Fetcher = PathPreviewFetcher(
+            context,
+            coilTempFiles,
+            generalSettings,
+            gatewaySwitch,
+            mimeTypeTool,
+            data,
+            options,
+        )
     }
 }
 

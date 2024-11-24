@@ -16,9 +16,8 @@ import eu.darken.sdmse.common.storage.PathMapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.plus
+import okio.FileHandle
 import okio.IOException
-import okio.Sink
-import okio.Source
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -179,16 +178,12 @@ class GatewaySwitch @Inject constructor(
         return useGateway(path) { canRead(path) }
     }
 
-    override suspend fun read(path: APath): Source {
-        return useGateway(path) { read(path) }
+    override suspend fun file(path: APath, readWrite: Boolean): FileHandle {
+        return useGateway(path) { file(path, readWrite) }
     }
 
-    override suspend fun write(path: APath): Sink {
-        return useGateway(path) { write(path) }
-    }
-
-    override suspend fun delete(path: APath) {
-        return useGateway(path) { delete(path) }
+    override suspend fun delete(path: APath, recursive: Boolean) {
+        return useGateway(path) { delete(path, recursive = recursive) }
     }
 
     override suspend fun createSymlink(linkPath: APath, targetPath: APath): Boolean {

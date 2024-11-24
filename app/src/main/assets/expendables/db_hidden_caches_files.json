@@ -1340,6 +1340,33 @@
 		  ]
 		}
 	  ]
+	}, {
+	  "packages": [
+		"com.lenovo.anyshare.gps",
+		"com.lenovo.anyshare",
+		"shareit.lite",
+		"shareit.premium"
+	  ],
+	  "fileFilter": [
+		{
+		  "locations": ["PUBLIC_DATA"],
+		  "contains": [
+			"/files/SHAREit/.caches/",
+			"/files/SHAREit Lite/.caches/",
+			"/files/SHAREit Premium/.caches/",
+			"/files/SHAREit/.status/",
+			"/files/SHAREit Lite/.status/",
+			"/files/SHAREit Premium/.status/"
+		  ]
+		}, {
+		  "locations": ["SDCARD"],
+		  "startsWith": [
+			"SHAREit/.status/",
+			"SHAREit Lite/.status/",
+			"SHAREit Premium/.status/"
+		  ]
+		}
+	  ]
 	}
   ]
 }

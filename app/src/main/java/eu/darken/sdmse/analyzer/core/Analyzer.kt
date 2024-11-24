@@ -27,7 +27,7 @@ import eu.darken.sdmse.common.debug.logging.Logging.Priority.WARN
 import eu.darken.sdmse.common.debug.logging.log
 import eu.darken.sdmse.common.debug.logging.logTag
 import eu.darken.sdmse.common.files.GatewaySwitch
-import eu.darken.sdmse.common.files.deleteAll
+import eu.darken.sdmse.common.files.delete
 import eu.darken.sdmse.common.files.filterDistinctRoots
 import eu.darken.sdmse.common.files.isAncestorOf
 import eu.darken.sdmse.common.files.matches
@@ -38,6 +38,7 @@ import eu.darken.sdmse.common.progress.updateProgressPrimary
 import eu.darken.sdmse.common.progress.updateProgressSecondary
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.common.sharedresource.SharedResource
+import eu.darken.sdmse.common.sharedresource.keepResourceHoldersAlive
 import eu.darken.sdmse.common.storage.StorageId
 import eu.darken.sdmse.main.core.SDMTool
 import eu.darken.sdmse.setup.IncompleteSetupException
@@ -66,6 +67,7 @@ class Analyzer @Inject constructor(
 
     override val type: SDMTool.Type = SDMTool.Type.ANALYZER
 
+    private val usedResources = setOf(gatewaySwitch)
     override val sharedResource = SharedResource.createKeepAlive(TAG, appScope)
 
     private val progressPub = MutableStateFlow<Progress.Data?>(null)
@@ -114,14 +116,15 @@ class Analyzer @Inject constructor(
         log(TAG) { "submit($task) starting..." }
         updateProgress { Progress.Data() }
         try {
-            val result = when (task) {
-                is DeviceStorageScanTask -> scanStorageDevices(task)
-                is StorageScanTask -> scanStorageContents(task)
-                is ContentDeleteTask -> deleteContent(task)
-                is AppDeepScanTask -> deepScanApp(task)
-                else -> throw UnsupportedOperationException("Unsupported task: $task")
+            val result = keepResourceHoldersAlive(usedResources) {
+                when (task) {
+                    is DeviceStorageScanTask -> scanStorageDevices(task)
+                    is StorageScanTask -> scanStorageContents(task)
+                    is ContentDeleteTask -> deleteContent(task)
+                    is AppDeepScanTask -> deepScanApp(task)
+                    else -> throw UnsupportedOperationException("Unsupported task: $task")
+                }
             }
-
             log(TAG, INFO) { "submit($task) finished: $result" }
             result
         } finally {
@@ -185,7 +188,7 @@ class Analyzer @Inject constructor(
             .forEach { target ->
                 log(TAG) { "Deleting $target" }
                 updateProgressSecondary(target.userReadablePath)
-                target.deleteAll(gatewaySwitch)
+                target.delete(gatewaySwitch, recursive = true)
             }
 
         // TODO this seems convoluted, can we come up with a better data pattern?

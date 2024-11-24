@@ -2,12 +2,13 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
+    id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("projectConfig")
 }
 
 android {
-    namespace = "${projectConfig.packageName}.common"
+    namespace = "${projectConfig.packageName}.common.test"
 
     setupLibraryDefaults(projectConfig)
 

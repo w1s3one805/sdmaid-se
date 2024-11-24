@@ -3142,7 +3142,9 @@
 	{"loc": "PUBLIC_DATA", "path": "com.qzone"},
 	{"loc": "PUBLIC_DATA", "path": "com.tencent.zebrasdk"},
 	{"loc": "SDCARD", "path": "MobileQQ"},
-	{"loc": "SDCARD", "path": "QQ_Collection"}
+	{"loc": "SDCARD", "path": "QQ_Collection"},
+	{"loc": "SDCARD", "path": "qsvf", "flags": ["common"]},
+	{"loc": "SDCARD", "path": "mfcache", "flags": ["common"]}
   ]
 }, {
   "pkgs": ["com.tencent.benchmark"],
@@ -3799,11 +3801,22 @@
   "pkgs": ["com.uei.lg.quicksetsdk.lite"],
   "mrks": [{"loc": "SDCARD", "path": "QuicksetLite Setup"}]
 }, {
-  "pkgs": ["com.lenovo.anyshare.gps", "com.lenovo.anyshare"],
+  "pkgs": ["com.lenovo.anyshare.gps", "com.lenovo.anyshare", "shareit.lite", "shareit.premium"],
   "mrks": [
 	{"loc": "SDCARD", "path": "QieZi"},
 	{"loc": "SDCARD", "path": ".SHAREit"},
-	{"loc": "SDCARD", "path": "SHAREit", "flags": ["keeper"]}
+	{"loc": "SDCARD", "path": "SHAREit", "flags": ["keeper"]},
+	{"loc": "SDCARD", "path": "SHAREit_Lite"},
+	{"loc": "SDCARD", "path": "SHAREit Lite"},
+	{"loc": "SDCARD", "path": "SHAREit Premium"},
+	{"loc": "SDCARD", "path": "Android/cache"},
+	{"loc": "SDCARD", "path": "Android/AndroidSystemProperties"},
+	{"loc": "SDCARD", "path": "com.android.settings"},
+	{"loc": "SDCARD", "path": "sepolicy_extends"},
+	{"loc": "SDCARD", "path": ".system_config"},
+	{"loc": "SDCARD", "path": "DCIM/.shareit_beyla_ids.cfg"},
+	{"loc": "SDCARD", "path": "DCIM/.shareit_lite_install.cfg"},
+	{"loc": "SDCARD", "path": "DCIM/.sys_install_s_time.cfg"}
   ]
 }, {
   "pkgs": ["com.tencent.game.rhythmmaster"],
@@ -8466,7 +8479,8 @@
 	{"loc": "SDCARD", "path": "cloudagent", "flags": ["keeper"]},
 	{"loc": "SDCARD", "path": ".cloudagent"},
 	{"loc": "SDCARD", "path": ".DOCUMENT_restore_temp"},
-	{"loc": "SDCARD", "path": ".APP", "flags": ["keeper", "common"]}
+	{"loc": "SDCARD", "path": ".APP", "flags": ["keeper", "common"]},
+	{"loc": "SDCARD", "path": "scloud", "flags": ["keeper", "common"]}
   ]
 }, {
   "pkgs": ["com.yaki.wordsplash"],
@@ -10995,9 +11009,6 @@
   "pkgs": ["com.weitetech.WiiWatchPro"],
   "mrks": [{"loc": "SDCARD", "path": "WiiWatch_Files_log"}]
 }, {
-  "pkgs": ["shareit.lite"],
-  "mrks": [{"loc": "SDCARD", "path": "SHAREit_Lite"}]
-}, {
   "pkgs": ["com.media.bestrecorder.audiorecorder"],
   "mrks": [{"loc": "SDCARD", "path": "Recorders", "flags": ["keeper", "common"]}]
 }, {
@@ -12285,7 +12296,10 @@
   "mrks": [{"loc": "SDCARD", "path": "com.eamobile.bejeweled2_carrier_wf"}]
 }, {
   "pkgs": ["com.osfans.trime"],
-  "mrks": [{"loc": "SDCARD", "path": "rime", "flags": ["keeper"]}]
+  "mrks": [
+	{"loc": "SDCARD", "path": "rime", "flags": ["keeper"]},
+	{"loc": "SDCARD", "path": "rime.old", "flags": ["keeper"]}
+  ]
 }, {
   "pkgs": ["com.videoconverter.videocompressor"],
   "mrks": [{"loc": "SDCARD", "path": "VideoCompressor", "flags": ["keeper"]}]
@@ -12575,5 +12589,8 @@
 }, {
   "pkgs": ["com.suning.mobile.ebuy"],
   "mrks": [{"loc": "SDCARD", "path": "oneplayer/.local"}]
+}, {
+  "pkgs": ["com.mi.android.globalFileexplorer"],
+  "mrks": [{"loc": "SDCARD", "path": "FileExplorer", "flags": ["common", "keeper"]}]
 }
 ]

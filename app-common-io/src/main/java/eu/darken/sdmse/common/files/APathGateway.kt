@@ -2,8 +2,7 @@ package eu.darken.sdmse.common.files
 
 import eu.darken.sdmse.common.sharedresource.HasSharedResource
 import kotlinx.coroutines.flow.Flow
-import okio.Sink
-import okio.Source
+import okio.FileHandle
 import java.time.Instant
 
 interface APathGateway<
@@ -53,11 +52,9 @@ interface APathGateway<
 
     suspend fun canRead(path: P): Boolean
 
-    suspend fun read(path: P): Source
+    suspend fun file(path: P, readWrite: Boolean): FileHandle
 
-    suspend fun write(path: P): Sink
-
-    suspend fun delete(path: P)
+    suspend fun delete(path: P, recursive: Boolean)
 
     suspend fun createSymlink(linkPath: P, targetPath: P): Boolean
 

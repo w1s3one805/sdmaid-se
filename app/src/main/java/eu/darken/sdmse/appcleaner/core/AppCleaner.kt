@@ -215,32 +215,35 @@ class AppCleaner @Inject constructor(
                         ?: appJunk.expendables?.keys
                         ?: emptySet()
 
+                    val allMatches = appJunk.expendables?.values?.flatten() ?: emptySet()
+
                     val targetMatches: Collection<ExpendablesFilter.Match> = task.targetContents
                         ?.map { tc ->
-                            val allFiles = appJunk.expendables?.values?.flatten() ?: emptySet()
-                            allFiles.single { tc.matches(it.path) }
+                            allMatches.single { tc.matches(it.path) }
                         }
                         ?: appJunk.expendables?.filterKeys { targetFilters.contains(it) }?.values?.flatten()
                         ?: emptySet()
 
                     val deleted = mutableSetOf<ExpendablesFilter.Match>()
 
-                    targetMatches.groupBy { it.identifier }.forEach { (filterIdentifier, matches) ->
+                    targetMatches.groupBy { it.identifier }.forEach { (filterIdentifier, targets) ->
                         val filter = filters.singleOrNull { it.identifier == filterIdentifier }
                             ?: throw IllegalStateException("Can't find filter for $filterIdentifier")
 
+                        updateProgressSecondary(eu.darken.sdmse.common.R.string.general_progress_loading)
+
                         filter.withProgress(
                             client = this,
-                            onUpdate = { old, new -> old?.copy(secondary = new?.secondary ?: CaString.EMPTY) },
+                            onUpdate = { old, new -> old?.copy(secondary = new?.primary ?: CaString.EMPTY) },
                             onCompletion = { it }
                         ) {
-                            val result = process(matches)
+                            val result = process(targets, allMatches)
                             log(TAG, INFO) {
-                                "Processed ${result.success.size} matches in $filterIdentifier for ${appJunk.pkg}!"
+                                "Processed ${result.success.size} targets in $filterIdentifier for ${appJunk.pkg}!"
                             }
                             if (result.failed.isNotEmpty()) {
                                 log(TAG, WARN) {
-                                    "${result.failed.size} matches failed to process in $filterIdentifier for ${appJunk.pkg}"
+                                    "${result.failed.size} targets failed to process in $filterIdentifier for ${appJunk.pkg}"
                                 }
                             }
                             deleted.addAll(result.success)

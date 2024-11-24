@@ -1,9 +1,10 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("projectConfig")
+    id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 apply(plugin = "dagger.hilt.android.plugin")
 apply(plugin = "androidx.navigation.safeargs.kotlin")
@@ -113,6 +114,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -196,6 +198,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("com.github.reddit:IndicatorFastScroll:f9576c7") // 1.4.0
     implementation("me.zhanghai.android.fastscroll:library:1.2.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     implementation("androidx.core:core-splashscreen:1.0.0")
@@ -203,6 +206,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.AndroidX.Navigation.core}")
     implementation("androidx.navigation:navigation-ui-ktx:${Versions.AndroidX.Navigation.core}")
     androidTestImplementation("androidx.navigation:navigation-testing:${Versions.AndroidX.Navigation.core}")
+
+
 
 
     testImplementation("org.robolectric:robolectric:4.9.1")

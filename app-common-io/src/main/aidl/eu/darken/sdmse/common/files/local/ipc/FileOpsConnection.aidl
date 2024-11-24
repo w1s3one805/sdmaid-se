@@ -1,5 +1,6 @@
 package eu.darken.sdmse.common.files.local.ipc;
 
+import eu.darken.sdmse.common.ipc.RemoteFileHandle;
 import eu.darken.sdmse.common.ipc.RemoteInputStream;
 import eu.darken.sdmse.common.ipc.RemoteOutputStream;
 import eu.darken.sdmse.common.files.local.LocalPath;
@@ -10,8 +11,7 @@ import eu.darken.sdmse.common.files.Permissions;
 
 interface FileOpsConnection {
 
-    RemoteInputStream readFile(in LocalPath path);
-    RemoteOutputStream writeFile(in LocalPath path);
+    RemoteFileHandle file(in LocalPath path, boolean readWrite);
 
     boolean mkdirs(in LocalPath path);
     boolean createNewFile(in LocalPath path);
@@ -21,7 +21,7 @@ interface FileOpsConnection {
 
     boolean exists(in LocalPath path);
 
-    boolean delete(in LocalPath path);
+    boolean delete(in LocalPath path, boolean recursive, boolean dryRun);
 
     RemoteInputStream listFilesStream(in LocalPath path);
 

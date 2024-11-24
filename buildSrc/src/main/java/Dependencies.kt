@@ -11,6 +11,9 @@ private fun DependencyHandler.testImplementation(dependencyNotation: Any): Depen
 private fun DependencyHandler.kapt(dependencyNotation: Any): Dependency? =
     add("kapt", dependencyNotation)
 
+private fun DependencyHandler.ksp(dependencyNotation: Any): Dependency? =
+    add("ksp", dependencyNotation)
+
 private fun DependencyHandler.kaptTest(dependencyNotation: Any): Dependency? =
     add("kaptTest", dependencyNotation)
 
@@ -62,7 +65,7 @@ fun DependencyHandlerScope.addCoroutines() {
 }
 
 fun DependencyHandlerScope.addCoil() {
-    val version = "2.4.0"
+    val version = "2.7.0"
     implementation("io.coil-kt:coil:$version")
     implementation("io.coil-kt:coil-video:$version")
 }
@@ -75,7 +78,7 @@ fun DependencyHandlerScope.addSerialization() {
     val version = "1.15.1"
     implementation("com.squareup.moshi:moshi:$version")
     implementation("com.squareup.moshi:moshi-adapters:$version")
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:$version")
+    add("ksp", "com.squareup.moshi:moshi-kotlin-codegen:$version")
 }
 
 fun DependencyHandlerScope.addIO() {
