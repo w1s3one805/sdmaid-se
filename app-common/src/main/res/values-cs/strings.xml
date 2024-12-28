@@ -5,7 +5,6 @@
     <string name="slogan_message_1">Čistota a pořádek.</string>
     <string name="slogan_message_2">Předcházení chaosu.</string>
     <string name="slogan_message_3">Dělat to, co je nezbytné.</string>
-    <string name="slogan_message_4">Všechny vaše karty jsou v pořádku.</string>
     <string name="slogan_message_5">Bez chyby.</string>
     <string name="slogan_message_6">Bajty, zmizte!</string>
     <string name="slogan_message_7">Volné místo, šťastné místo.</string>
@@ -76,7 +75,6 @@
     <string name="general_tag_filter_label">Filtrovat podle štítků</string>
     <string name="general_result_success_message">Operace úspěšně dokončena</string>
     <string name="general_result_failure_message">Operace se nezdařila</string>
-    <string name="general_result_x_space_freed">Uvolněno %s</string>
     <string name="general_options_label">Možnosti</string>
     <string name="general_details_label">Podrobnosti</string>
     <string name="general_view_action">Zobrazit</string>
@@ -90,11 +88,11 @@
     <string name="general_delete_confirmation_title">Potvrdit vymazání</string>
     <string name="general_delete_confirmation_message_x">Vymazat \"%s\"?</string>
     <string name="general_delete_confirmation_message_selected_x_items">Smazat %d vybraných položek?</string>
-    <plurals name="general_delete_success_deleted_x_freed_y">
-        <item quantity="one">Smazána %1$d položka a uvolněno %2$s</item>
-        <item quantity="few">Smazány %1$d položky a uvolněno %2$s</item>
-        <item quantity="many">Smazáno %1$d položek a uvolněno %2$s</item>
-        <item quantity="other">Smazáno %1$d položek a uvolněno %2$s</item>
+    <plurals name="general_delete_success_deleted_x">
+        <item quantity="one">Smazána %d položka.</item>
+        <item quantity="few">Smazány %d položky.</item>
+        <item quantity="many">Smazáno %d položek.</item>
+        <item quantity="other">Smazáno %d položek.</item>
     </plurals>
     <string name="general_remove_action">Odstranit</string>
     <string name="general_remove_selected_action">Odstranit vybrané</string>
@@ -127,7 +125,12 @@
         <item quantity="many">%d neúspěšných</item>
         <item quantity="other">%d neúspěšných</item>
     </plurals>
-    <string name="x_space_can_be_freed">Je možné uvolnit %s</string>
+    <plurals name="x_space_can_be_freed">
+        <item quantity="one">Je možné uvolnit %s</item>
+        <item quantity="few">Je možné uvolnit %s</item>
+        <item quantity="many">Je možné uvolnit %s</item>
+        <item quantity="other">Je možné uvolnit %s</item>
+    </plurals>
     <string name="general_info_label">Informace</string>
     <string name="general_count_label">Počet</string>
     <string name="general_app_label">Aplikace</string>
@@ -148,11 +151,21 @@
     <string name="file_type_directory">Adresář</string>
     <string name="file_type_file">Soubor</string>
     <string name="file_type_unknown">Neznámý</string>
-    <string name="general_timeunit_hours">Hodiny</string>
-    <string name="general_timeunit_days">Dny</string>
     <string name="general_progress_ready">Připraveno</string>
     <string name="general_progress_done">Hotovo</string>
     <string name="general_rom_type_auto_label">Automaticky (výchozí)</string>
+    <plurals name="general_age_days">
+        <item quantity="one">%d den</item>
+        <item quantity="few">%d dny</item>
+        <item quantity="many">%d dnů</item>
+        <item quantity="other">%d dnů</item>
+    </plurals>
+    <plurals name="general_age_hours">
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
+        <item quantity="other">%d hodin</item>
+    </plurals>
     <plurals name="result_x_files">
         <item quantity="one">%s soubor</item>
         <item quantity="few">%s soubory</item>
@@ -160,4 +173,5 @@
         <item quantity="other">%s souborů</item>
     </plurals>
     <string name="general_advice_title">Doporučení</string>
+    <string name="general_error_invalid_input_label">Neplatný vstup</string>
 </resources>

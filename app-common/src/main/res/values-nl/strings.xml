@@ -5,7 +5,6 @@
     <string name="slogan_message_1">Schoon en netjes.</string>
     <string name="slogan_message_2">Chaos voorkomen.</string>
     <string name="slogan_message_3">Doen wat noodzakelijk is.</string>
-    <string name="slogan_message_4">Al je eenden op een rij.</string>
     <string name="slogan_message_5">Brandschoon.</string>
     <string name="slogan_message_6">Bytes, wegwezen!</string>
     <string name="slogan_message_7">Vrije ruimte, fijne plek.</string>
@@ -76,7 +75,6 @@
     <string name="general_tag_filter_label">Filteren op tags</string>
     <string name="general_result_success_message">Bewerking geslaagd</string>
     <string name="general_result_failure_message">Bewerking mislukt</string>
-    <string name="general_result_x_space_freed">%s bevrijd</string>
     <string name="general_options_label">Opties</string>
     <string name="general_details_label">Details</string>
     <string name="general_view_action">Weergave</string>
@@ -90,12 +88,12 @@
     <string name="general_delete_confirmation_title">Bevestig verwijdering</string>
     <string name="general_delete_confirmation_message_x">Verwijder \"%s\"?</string>
     <string name="general_delete_confirmation_message_selected_x_items">%d geselecteerde items verwijderen?</string>
-    <plurals name="general_delete_success_deleted_x_freed_y">
-        <item quantity="one">%1$d item verwijderd en %2$s vrijgegeven</item>
-        <item quantity="other">%1$d items verwijderd en %2$s vrijgegeven</item>
+    <plurals name="general_delete_success_deleted_x">
+        <item quantity="one">%d item verwijderd.</item>
+        <item quantity="other">%d items verwijderd.</item>
     </plurals>
     <string name="general_remove_action">Verwijderen</string>
-    <string name="general_remove_selected_action">Selectie verwijderen</string>
+    <string name="general_remove_selected_action">Verwijder geselecteerde</string>
     <plurals name="general_remove_success_x_items">
         <item quantity="one">Eén item is verwijderd</item>
         <item quantity="other">%d items zijn verwijderd</item>
@@ -117,7 +115,10 @@
         <item quantity="one">%d mislukt</item>
         <item quantity="other">%d mislukt</item>
     </plurals>
-    <string name="x_space_can_be_freed">%s kan worden vrijgemaakt</string>
+    <plurals name="x_space_can_be_freed">
+        <item quantity="one">%s kan worden vrijgemaakt</item>
+        <item quantity="other">%s kan worden vrijgemaakt</item>
+    </plurals>
     <string name="general_info_label">Info</string>
     <string name="general_count_label">Tellen</string>
     <string name="general_app_label">App</string>
@@ -138,14 +139,21 @@
     <string name="file_type_directory">Adresboek</string>
     <string name="file_type_file">Bestand</string>
     <string name="file_type_unknown">Onbekend</string>
-    <string name="general_timeunit_hours">Uren</string>
-    <string name="general_timeunit_days">Dagen</string>
     <string name="general_progress_ready">Klaar</string>
-    <string name="general_progress_done">Klaar</string>
+    <string name="general_progress_done">Gedaan</string>
     <string name="general_rom_type_auto_label">Automatisch (standaard)</string>
+    <plurals name="general_age_days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <plurals name="general_age_hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uur</item>
+    </plurals>
     <plurals name="result_x_files">
         <item quantity="one">%s bestand</item>
         <item quantity="other">%s bestanden</item>
     </plurals>
     <string name="general_advice_title">Advies</string>
+    <string name="general_error_invalid_input_label">Ongeldige invoer</string>
 </resources>

@@ -888,7 +888,10 @@
   "mrks": [{"loc": "SDCARD", "path": "TianQiTong"}]
 }, {
   "pkgs": ["com.tencent.android.qqdownloader"],
-  "mrks": [{"loc": "SDCARD", "path": "bao"}]
+  "mrks": [
+	{"loc": "SDCARD", "path": "bao"},
+	{"loc": "SDCARD", "path": "tencent/tassistant"}
+  ]
 }, {
   "pkgs": ["com.youku.phone"],
   "mrks": [{"loc": "SDCARD", "path": "youku"}]
@@ -1282,13 +1285,6 @@
 }, {
   "pkgs": ["org.abrantix.rockon.rockonnggl"],
   "mrks": [{"loc": "SDCARD", "path": "albumthumbs"}]
-}, {
-  "pkgs": ["com.symantec.mobilesecurity"],
-  "mrks": [
-	{"loc": "SDCARD", "path": ".symantec_persisted"},
-	{"loc": "SDCARD", "path": "symantec_update_temp"},
-	{"loc": "SDCARD", "path": ".norton"}
-  ]
 }, {
   "pkgs": ["com.tencent.qqphonebook"],
   "mrks": [
@@ -6014,9 +6010,6 @@
   "pkgs": ["com.AndroidA.MediaConverter"],
   "mrks": [{"loc": "SDCARD", "path": "MediaConverter", "flags": ["keeper"]}]
 }, {
-  "pkgs": ["com.symantec.mobile.idsafe"],
-  "mrks": [{"loc": "SDCARD", "path": ".symantec_persisted"}]
-}, {
   "pkgs": ["zame.GloomyDungeons.freedemo.game"],
   "mrks": [{"loc": "PUBLIC_DATA", "path": "zame.GloomyDungeons.common"}]
 }, {
@@ -9742,7 +9735,12 @@
 	"^(?:com\\.symantec\\..+?)$",
 	"^(?:com\\.nitrodesk\\..+?)$"
   ],
-  "mrks": [{"loc": "SDCARD", "path": ".symantec"}]
+  "mrks": [
+	{"loc": "SDCARD", "path": ".symantec"},
+	{"loc": "SDCARD", "path": ".symantec_persisted"},
+	{"loc": "SDCARD", "path": "symantec_update_temp"},
+	{"loc": "SDCARD", "path": ".norton"}
+  ]
 }, {
   "pkgs": [
 	"com.smartthings.android",
@@ -12592,5 +12590,8 @@
 }, {
   "pkgs": ["com.mi.android.globalFileexplorer"],
   "mrks": [{"loc": "SDCARD", "path": "FileExplorer", "flags": ["common", "keeper"]}]
+}, {
+  "pkgs": ["com.miui.screenshot"],
+  "mrks": [{"loc": "SDCARD", "path": "DCIM/Screenshots", "flags": ["keeper", "common"]}]
 }
 ]

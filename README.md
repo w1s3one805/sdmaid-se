@@ -21,7 +21,7 @@ Features include:
 * Deleting expendable files, e.g. caches (AppCleaner)
 * User configurable filters for random files (SystemCleaner)
 * Scheduling actions (Scheduler)
-* Controling/disabling apps (AppControl)
+* Controlling/disabling apps (AppControl)
 * Storage overview (StorageAnalyzer)
 * Find duplicate data (Deduplicator)
 * Root and Shizuku support
@@ -73,3 +73,7 @@ SD Maid SE's code is available under a GPL v3 license, this excludes:
 * Google Play screenshots.
 * Google Play texts & descriptions.
 * Translations.
+
+## Thanks
+
+* Thanks to [crowdin.com](https://crowdin.com/) for supporting open-source projects

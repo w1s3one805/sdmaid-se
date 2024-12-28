@@ -5,7 +5,6 @@
     <string name="slogan_message_1">تمیز و مرتب.</string>
     <string name="slogan_message_2">جلوگیری از هرج و مرج.</string>
     <string name="slogan_message_3">انجام آنچه لازم است.</string>
-    <string name="slogan_message_4">همه اردک های شما پشت سر هم.</string>
     <string name="slogan_message_5">بی عیب.</string>
     <string name="slogan_message_6">بایت، برو!</string>
     <string name="slogan_message_7">فضای آزاد، جای شاد.</string>
@@ -97,7 +96,6 @@
         <item quantity="one">%d شکست خورد</item>
         <item quantity="other">%d شکست خورد</item>
     </plurals>
-    <string name="x_space_can_be_freed">%s قابل آزادسازی است</string>
     <string name="general_info_label">درباره</string>
     <string name="general_count_label">تعداد</string>
     <string name="general_app_label">برنامه</string>
@@ -117,8 +115,6 @@
     <string name="file_type_directory">مسیر</string>
     <string name="file_type_file">فایل</string>
     <string name="file_type_unknown">ناشناخته</string>
-    <string name="general_timeunit_hours">ساعت</string>
-    <string name="general_timeunit_days">روز</string>
     <string name="general_progress_ready">آماده</string>
     <string name="general_progress_done">انجام شد</string>
     <string name="general_rom_type_auto_label">خودکار (پیش‌فرض)</string>

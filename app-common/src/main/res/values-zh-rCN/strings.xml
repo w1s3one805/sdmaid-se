@@ -5,7 +5,6 @@
     <string name="slogan_message_1">干净整洁</string>
     <string name="slogan_message_2">预防于乱。</string>
     <string name="slogan_message_3">只做必行之事。</string>
-    <string name="slogan_message_4">万物归整。</string>
     <string name="slogan_message_5">一尘不染。</string>
     <string name="slogan_message_6">字节，滚开！</string>
     <string name="slogan_message_7">释放空间，乐似神仙</string>
@@ -76,7 +75,6 @@
     <string name="general_tag_filter_label">按标签排序</string>
     <string name="general_result_success_message">操作成功</string>
     <string name="general_result_failure_message">操作失败</string>
-    <string name="general_result_x_space_freed">已释放 %s</string>
     <string name="general_options_label">选项</string>
     <string name="general_details_label">详细信息</string>
     <string name="general_view_action">查看</string>
@@ -90,8 +88,8 @@
     <string name="general_delete_confirmation_title">确认删除</string>
     <string name="general_delete_confirmation_message_x">是否删除“%s”？</string>
     <string name="general_delete_confirmation_message_selected_x_items">删除选中的 %d 个项目吗？</string>
-    <plurals name="general_delete_success_deleted_x_freed_y">
-        <item quantity="other">已删除 %1$d 个项目，并释放了 %2$s</item>
+    <plurals name="general_delete_success_deleted_x">
+        <item quantity="other">已删除 %d 项</item>
     </plurals>
     <string name="general_remove_action">删除</string>
     <string name="general_remove_selected_action">移除所选</string>
@@ -112,7 +110,9 @@
     <plurals name="result_x_failed">
         <item quantity="other">%d个失败</item>
     </plurals>
-    <string name="x_space_can_be_freed">可释放 %s 空间</string>
+    <plurals name="x_space_can_be_freed">
+        <item quantity="other">可释放 %s 空间</item>
+    </plurals>
     <string name="general_info_label">信息</string>
     <string name="general_count_label">数量</string>
     <string name="general_app_label">应用</string>
@@ -133,13 +133,18 @@
     <string name="file_type_directory">目录</string>
     <string name="file_type_file">文件</string>
     <string name="file_type_unknown">未知</string>
-    <string name="general_timeunit_hours">小时</string>
-    <string name="general_timeunit_days">天</string>
     <string name="general_progress_ready">准备就绪</string>
     <string name="general_progress_done">完成</string>
     <string name="general_rom_type_auto_label">自动(默认)</string>
+    <plurals name="general_age_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+    <plurals name="general_age_hours">
+        <item quantity="other">%d 小时</item>
+    </plurals>
     <plurals name="result_x_files">
         <item quantity="other">%s 个文件</item>
     </plurals>
     <string name="general_advice_title">建议</string>
+    <string name="general_error_invalid_input_label">输入无效</string>
 </resources>

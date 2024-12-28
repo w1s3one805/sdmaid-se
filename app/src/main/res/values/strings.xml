@@ -15,7 +15,7 @@
     <string name="debug_debuglog_record_action">Record debug log</string>
     <string name="debug_debuglog_stop_action">Stop recording</string>
     <string name="debug_debuglog_sensitive_information_message">The generated file contains sensitive information (e.g. file names and installed apps). Only share it with trusted parties.</string>
-    <string name="settings_debuglog_explanation">This feature records everything the app is doing into a shareable file. The generated file contains sensitive information (e.g. file names and installed apps). Only share it with trusted parties (e.g. a developer that is troubleshooting an issue).</string>
+    <string name="settings_debuglog_explanation">This feature records everything the app is doing into a shareable file. The generated file contains sensitive information (e.g. file names and installed apps). Only share it with trusted parties (e.g. a developer troubleshooting an issue).</string>
 
     <string name="tasks_activity_notification_channel_label">Active tasks</string>
     <string name="tasks_activity_working_notification_title">SD Maid is working</string>
@@ -271,6 +271,10 @@
     <string name="systemcleaner_filter_anr_summary">Traces from \'application not responding\' events.</string>
     <string name="systemcleaner_filter_emptydirectories_label">Empty folders</string>
     <string name="systemcleaner_filter_emptydirectories_summary">Empty folders from all over the device. Nested folders may require multiple passes.</string>
+    <string name="systemcleaner_filter_screenshots_label">Screenshots</string>
+    <string name="systemcleaner_filter_screenshots_summary">Screenshots older than %s from multiple apps and locations.</string>
+    <string name="systemcleaner_filter_screenshots_age_label">Screenshot Age</string>
+    <string name="systemcleaner_filter_screenshots_age_summary">Minimum age for screenshots to be considered for deletion.</string>
     <string name="systemcleaner_filter_superfluosapks_label">Superfluous APKs</string>
     <string name="systemcleaner_filter_superfluosapks_summary">Setup files that are older or equal to app versions that are already installed.</string>
     <string name="systemcleaner_filter_lostdir_label">LOST.DIR folders</string>
@@ -280,7 +284,7 @@
     <string name="systemcleaner_filter_macfiles_label">Mac files</string>
     <string name="systemcleaner_filter_macfiles_summary">Files and folders that are created when browsing storage with Apple\'s finder app.</string>
     <string name="systemcleaner_filter_windowsfiles_label">Windows files</string>
-    <string name="systemcleaner_filter_windowsfiles_summary">"Data that the Windows file explorer can create on connected storage. "</string>
+    <string name="systemcleaner_filter_windowsfiles_summary">"Data that the Windows file explorer can create on connected storage."</string>
     <string name="systemcleaner_filter_thumbnails_label">Thumbnail images</string>
     <string name="systemcleaner_filter_thumbnails_summary">Cached previews for images and videos.</string>
     <string name="systemcleaner_filter_tempfiles_label">Temporary files</string>
@@ -323,10 +327,10 @@
     <string name="systemcleaner_customfilter_editor_exclusions_label">Exclusions</string>
     <string name="systemcleaner_customfilter_editor_exclusions_explanation">The result will be excluded if the path matches any entry (e.g. \"DCIM\"). Long press entries for more options.</string>
     <string name="systemcleaner_customfilter_editor_segments_matching_mode_label">Path comparison mode</string>
-    <string name="systemcleaner_customfilter_editor_segments_matching_mode_start_label">Path starts with keywords</string>
-    <string name="systemcleaner_customfilter_editor_segments_matching_mode_contains_label">Path contains keywords</string>
-    <string name="systemcleaner_customfilter_editor_segments_matching_mode_end_label">Path ends with keywords</string>
-    <string name="systemcleaner_customfilter_editor_segments_matching_mode_equal_label">Path is equal to keywords</string>
+    <string name="systemcleaner_customfilter_editor_segments_matching_mode_start_label">Path starts with keyword</string>
+    <string name="systemcleaner_customfilter_editor_segments_matching_mode_contains_label">Path contains keyword</string>
+    <string name="systemcleaner_customfilter_editor_segments_matching_mode_end_label">Path ends with keyword</string>
+    <string name="systemcleaner_customfilter_editor_segments_matching_mode_equal_label">Path is equal to keyword</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_label">Name comparison mode</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_start_label">Name starts with keyword</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_contains_label">Name contains keyword</string>
@@ -446,7 +450,10 @@
     <string name="deduplicator_detection_method_phash_title">Perceptual hash</string>
     <string name="deduplicator_detection_method_phash_summary">Find similar files by analyzing content features and comparing perceptual hash values.</string>
     <string name="deduplicator_occupied_space_label">Occupied storage</string>
-    <string name="deduplicator_x_space_occupied_by_duplicates_msg">%s are occupied by duplicates</string>
+    <plurals name="deduplicator_x_space_occupied_by_duplicates_msg">
+        <item quantity="one">%s is occupied by duplicates</item>
+        <item quantity="other">%s are occupied by duplicates</item>
+    </plurals>
     <string name="deduplicator_file_size_label">File size</string>
     <string name="deduplicator_average_size_label">Average size</string>
     <string name="deduplicator_cluster_x_label">Cluster %s</string>
@@ -707,7 +714,14 @@
     <string name="review_app_body">Would you like to leave SD Maid a review?️ ❤️</string>
 
     <string name="stats_label">History</string>
-    <string name="stats_dash_body">%s have been freed and %s items processed since you invited SD Maid to your device.</string>
+    <plurals name="stats_dash_body_size">
+        <item quantity="one">%s has been freed.</item>
+        <item quantity="other">%s have been freed.</item>
+    </plurals>
+    <plurals name="stats_dash_body_count">
+        <item quantity="one">%s item processed since you invited SD Maid to your device.</item>
+        <item quantity="other">%s items processed since you invited SD Maid to your device.</item>
+    </plurals>
     <string name="stats_report_status_success">Success</string>
     <string name="stats_report_status_partial_success">Partial success</string>
     <string name="stats_report_status_partial_failure">Failure</string>

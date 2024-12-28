@@ -5,7 +5,6 @@
     <string name="slogan_message_1">נקי ומסודר.</string>
     <string name="slogan_message_2">מונע כאוס.</string>
     <string name="slogan_message_3">עושה מה שצריך.</string>
-    <string name="slogan_message_4">כל הברווזים שלך ברצף.</string>
     <string name="slogan_message_5">ללא כתמים.</string>
     <string name="slogan_message_6">ביטים, העלמו!</string>
     <string name="slogan_message_7">מקום פנוי, מקום שמח.</string>
@@ -75,7 +74,6 @@
     <string name="general_tag_filter_label">סנן לפי תגיות</string>
     <string name="general_result_success_message">הפעולה בוצעה בהצלחה</string>
     <string name="general_result_failure_message">הפעולה נכשלה</string>
-    <string name="general_result_x_space_freed">%s שוחרר</string>
     <string name="general_options_label">הגדרות</string>
     <string name="general_details_label">פרטים</string>
     <string name="general_view_action">הצג</string>
@@ -102,7 +100,6 @@
         <item quantity="many">%s פריטים</item>
         <item quantity="other">%s פריטים</item>
     </plurals>
-    <string name="x_space_can_be_freed">ניתן לשחרר %s</string>
     <string name="general_info_label">מידע</string>
     <string name="general_count_label">ספירה</string>
     <string name="general_app_label">אפליקציה</string>
@@ -123,8 +120,6 @@
     <string name="file_type_directory">תיקייה</string>
     <string name="file_type_file">קובץ</string>
     <string name="file_type_unknown">לא ידוע</string>
-    <string name="general_timeunit_hours">שעות</string>
-    <string name="general_timeunit_days">ימים</string>
     <string name="general_progress_ready">מוכן</string>
     <string name="general_progress_done">בוצע</string>
     <string name="general_rom_type_auto_label">אוטומטי (ברירת מחדל)</string>

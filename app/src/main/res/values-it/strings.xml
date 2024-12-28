@@ -15,7 +15,6 @@
     <string name="debug_debuglog_record_action">Registra log di debug</string>
     <string name="debug_debuglog_stop_action">Interrompi registrazione</string>
     <string name="debug_debuglog_sensitive_information_message">Il file creato contiene informazioni sensibili (ad esempio nomi di file e applicazioni installate). Condividilo solo con persone fidate.</string>
-    <string name="settings_debuglog_explanation">Questa funzionalità registra tutte ciò che l\'app esegue in un file condivisibile. Il file creato contiene informazioni sensibili (ad esempio nomi dei file e applicazioni installate). Condividilo solo con persone fidate (ad esempio uno sviluppatore per problemi di diagnostica).</string>
     <string name="tasks_activity_notification_channel_label">Processi attivi</string>
     <string name="tasks_activity_working_notification_title">SD Maid è in esecuzione</string>
     <plurals name="tasks_activity_active_notification_message">
@@ -236,6 +235,10 @@
     <string name="systemcleaner_filter_anr_summary">Tracce degli eventi \"L\'applicazione non risponde\".</string>
     <string name="systemcleaner_filter_emptydirectories_label">Cartelle vuote</string>
     <string name="systemcleaner_filter_emptydirectories_summary">Cartelle vuote trovate nel dispositivo. Le sottocartelle potrebbero richiedere più passaggi.</string>
+    <string name="systemcleaner_filter_screenshots_label">Screenshot</string>
+    <string name="systemcleaner_filter_screenshots_summary">Screenshot più vecchi di %s da più app e posizioni.</string>
+    <string name="systemcleaner_filter_screenshots_age_label">Età Screenshot</string>
+    <string name="systemcleaner_filter_screenshots_age_summary">Età minima da considerare per l\'eliminazione degli screenshot.</string>
     <string name="systemcleaner_filter_superfluosapks_label">APK superflui</string>
     <string name="systemcleaner_filter_superfluosapks_summary">File installabili più vecchi o uguali a versioni di app già installate.</string>
     <string name="systemcleaner_filter_lostdir_label">Cartelle LOST.DIR</string>
@@ -245,7 +248,7 @@
     <string name="systemcleaner_filter_macfiles_label">File di Mac</string>
     <string name="systemcleaner_filter_macfiles_summary">File e cartelle che vengono creati durante la navigazione archiviazione con l\'app di ricerca di Apple.</string>
     <string name="systemcleaner_filter_windowsfiles_label">File di Windows</string>
-    <string name="systemcleaner_filter_windowsfiles_summary">"Dati che l'esploratore di file di Windows può creare nel dispositivo connesso."</string>
+    <string name="systemcleaner_filter_windowsfiles_summary">"Dati che Esplora file di Windows può creare nell'archivio connesso"</string>
     <string name="systemcleaner_filter_thumbnails_label">Anteprime</string>
     <string name="systemcleaner_filter_thumbnails_summary">Anteprime nella cache per immagini e video.</string>
     <string name="systemcleaner_filter_tempfiles_label">File temporanei</string>
@@ -290,7 +293,7 @@
     <string name="systemcleaner_customfilter_editor_segments_matching_mode_start_label">Il percorso inizia con la parola chiave</string>
     <string name="systemcleaner_customfilter_editor_segments_matching_mode_contains_label">Il percorso contiene la parola chiave</string>
     <string name="systemcleaner_customfilter_editor_segments_matching_mode_end_label">Il percorso termina con la parola chiave</string>
-    <string name="systemcleaner_customfilter_editor_segments_matching_mode_equal_label">Il percorso è uguale alle parole chiave</string>
+    <string name="systemcleaner_customfilter_editor_segments_matching_mode_equal_label">Il percorso è uguale alla parola chiave</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_label">Modalità confronto nomi</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_start_label">Il nome inizia con la parola chiave</string>
     <string name="systemcleaner_customfilter_editor_name_matching_mode_contains_label">Il nome contiene la parola chiave</string>
@@ -342,8 +345,8 @@
     <string name="appcleaner_filter_webview_summary">File memorizzati nella cache da istanze di Webview utilizzate all\'interno delle app.</string>
     <string name="appcleaner_filter_whatsapp_backups_label">Backup di WhatsApp</string>
     <string name="appcleaner_filter_whatsapp_backups_summary">Eliminare le copie extra dei backup di WhatsApp e mantenere solo gli ultimi.</string>
-    <string name="appcleaner_filter_whatsapp_received_summary">File ricevuti su WhatsApp</string>
-    <string name="appcleaner_filter_whatsapp_received_label">File ricevuti da persone tramite WhatsApp.</string>
+    <string name="appcleaner_filter_whatsapp_received_summary">File ricevuti nelle chat di WhatsApp.</string>
+    <string name="appcleaner_filter_whatsapp_received_label">File ricevuti su WhatsApp</string>
     <string name="appcleaner_filter_whatsapp_sent_label">File inviati su WhatsApp</string>
     <string name="appcleaner_filter_whatsapp_sent_summary">File inviati da WhatsApp ad altre persone.</string>
     <string name="appcleaner_filter_telegram_label">File multimediali di Telegram</string>
@@ -354,6 +357,8 @@
     <string name="appcleaner_filter_wechat_summary">File inviati o ricevuti su WeChat.</string>
     <string name="appcleaner_filter_viber_label">Viber</string>
     <string name="appcleaner_filter_viber_summary">File multimediali nella cache, che vengono scaricati di nuovo quando visualizzati in chat.</string>
+    <string name="appcleaner_filter_qqchat_label">QQ chat</string>
+    <string name="appcleaner_filter_qqchat_summary">File inviati o ricevuti su QQ chat.</string>
     <string name="appcleaner_delete_all_confirmation_message">Eliminare gli elementi inutili per tutte le applicazioni?</string>
     <plurals name="appcleaner_result_x_items_deleted">
         <item quantity="one">%d elemento inutile eliminato</item>
@@ -405,7 +410,10 @@ Se non lo si vuole usare: Disabilita l\'opzione \"Includi cache inaccessibili\".
     <string name="deduplicator_detection_method_phash_title">Hash percettivo</string>
     <string name="deduplicator_detection_method_phash_summary">Trova file simili analizzando le caratteristiche del contenuto e confrontando i valori degli hash percettivi.</string>
     <string name="deduplicator_occupied_space_label">Spazio occupato</string>
-    <string name="deduplicator_x_space_occupied_by_duplicates_msg">%s sono occupati da file duplicati</string>
+    <plurals name="deduplicator_x_space_occupied_by_duplicates_msg">
+        <item quantity="one">%s è occupato da duplicati</item>
+        <item quantity="other">%s sono occupati da duplicati</item>
+    </plurals>
     <string name="deduplicator_file_size_label">Dimensione file</string>
     <string name="deduplicator_average_size_label">Dimensione media</string>
     <string name="deduplicator_cluster_x_label">Cluster %s</string>
@@ -583,6 +591,7 @@ Esempio: Il segmento \"DCIM/Camera\" escluderà anche \"/sdcard/DCIM/Camera/phot
         <item quantity="one">Un\'esclusione creata</item>
         <item quantity="other">%d esclusioni create</item>
     </plurals>
+    <string name="exclusion_show_defaults_action">Mostra predefiniti</string>
     <string name="automation_accessibility_service_description">Potete abilitare questo servizio per concedere a SD Maid di automatizzare compiti che richiederebbero molteplici interazioni manuali (ad esempio l\'eliminazioni della cache). \n\nEsempio: Se viene chiesto a SD Maid di arrestare più app, allora questo servizio viene utilizzato per aprire le impostazioni di ogni app, trovare il bottone \'Arresto forzato\' e cliccarlo.\n\nSD Maid mostrerà sempre quando il servizio verrà utilizzao e consentendo all\'utente di annullare le interazioni immadiatamente.\n\nNessuna azione verrà eseguita senza l\'approvazione dell\'utente. Questo servizio può essere disattivato in qualsiasi momento senza effetti collaterali.</string>
     <string name="automation_screenoverlay_explanation">SD Maid sta interagendo con il tuo dispositivo. Non è possibile utilizzare lo schermo allo stesso tempo. Attendere fino al termine dell\'operazione o annullarla.</string>
     <string name="automation_active_title">SD Maid sta funzionando</string>
@@ -650,7 +659,10 @@ Esempio: Il segmento \"DCIM/Camera\" escluderà anche \"/sdcard/DCIM/Camera/phot
     <string name="review_app_dismiss_action">Forse più tardi</string>
     <string name="review_app_body">Vuoi lasciare una recensione su SD Maid? ❤️</string>
     <string name="stats_label">Cronologia</string>
-    <string name="stats_dash_body">Da quando hai installato SD Maid sono stati liberati %s e analizzati %s elementi.</string>
+    <plurals name="stats_dash_body_size">
+        <item quantity="one">%s è stato liberato</item>
+        <item quantity="other">%s sono stati liberati</item>
+    </plurals>
     <string name="stats_report_status_success">Completato</string>
     <string name="stats_report_status_partial_success">Completato parzialmente</string>
     <string name="stats_report_status_partial_failure">Errore</string>

@@ -5,7 +5,6 @@
     <string name="slogan_message_1">Limpo e arrumado.</string>
     <string name="slogan_message_2">A impedir o caos.</string>
     <string name="slogan_message_3">Faz o que é necessário.</string>
-    <string name="slogan_message_4">Matar dois coelhos com uma cajadada.</string>
     <string name="slogan_message_5">Impecável.</string>
     <string name="slogan_message_6">Bytes, desapareçam!</string>
     <string name="slogan_message_7">Espaço livre, lugar feliz.</string>
@@ -76,7 +75,6 @@
     <string name="general_tag_filter_label">Filtrar por etiqueta</string>
     <string name="general_result_success_message">Operação bem sucedida</string>
     <string name="general_result_failure_message">Falha na operação</string>
-    <string name="general_result_x_space_freed">%s livre</string>
     <string name="general_options_label">Opções</string>
     <string name="general_details_label">Detalhes</string>
     <string name="general_view_action">Ver</string>
@@ -90,9 +88,9 @@
     <string name="general_delete_confirmation_title">Confirmar eliminação</string>
     <string name="general_delete_confirmation_message_x">Apagar \"%s\"?</string>
     <string name="general_delete_confirmation_message_selected_x_items">Apagar os %d itens selecionados?</string>
-    <plurals name="general_delete_success_deleted_x_freed_y">
-        <item quantity="one">%1$d item apagado, %2$s libertos</item>
-        <item quantity="other">%1$d itens apagado, %2$s libertos</item>
+    <plurals name="general_delete_success_deleted_x">
+        <item quantity="one">Apagado %d item.</item>
+        <item quantity="other">Apagados %d itens.</item>
     </plurals>
     <string name="general_remove_action">Remover</string>
     <string name="general_remove_selected_action">Remover seleção</string>
@@ -117,7 +115,10 @@
         <item quantity="one">%d falhou</item>
         <item quantity="other">%d falharam</item>
     </plurals>
-    <string name="x_space_can_be_freed">Pode libertar %s</string>
+    <plurals name="x_space_can_be_freed">
+        <item quantity="one">Pode libertar %s</item>
+        <item quantity="other">Pode libertar %s</item>
+    </plurals>
     <string name="general_info_label">Informação</string>
     <string name="general_count_label">Contagem</string>
     <string name="general_app_label">Aplicação</string>
@@ -138,14 +139,21 @@
     <string name="file_type_directory">Diretório</string>
     <string name="file_type_file">Ficheiro</string>
     <string name="file_type_unknown">Desconhecido</string>
-    <string name="general_timeunit_hours">Horas</string>
-    <string name="general_timeunit_days">Dias</string>
     <string name="general_progress_ready">Pronto</string>
     <string name="general_progress_done">Concluído</string>
     <string name="general_rom_type_auto_label">Automático (Padrão)</string>
+    <plurals name="general_age_days">
+        <item quantity="one">%d dia</item>
+        <item quantity="other">%d dias</item>
+    </plurals>
+    <plurals name="general_age_hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
     <plurals name="result_x_files">
         <item quantity="one">%s ficheiro</item>
         <item quantity="other">%s ficheiros</item>
     </plurals>
     <string name="general_advice_title">Conselho</string>
+    <string name="general_error_invalid_input_label">Entrada inválida</string>
 </resources>

@@ -5,7 +5,6 @@
     <string name="slogan_message_1">ਸਾਫ਼-ਸੁਥਰਾ।</string>
     <string name="slogan_message_2">ਖਲਾਰੇ ਪੈਣ ਤੋਂ ਰੋਕਦੇ ਹੋਏ।</string>
     <string name="slogan_message_3">ਜੀਹਦੀ ਲੋੜ ਹੈ, ਓਹੀ ਕਰਦੇ ਹੋਏ।</string>
-    <string name="slogan_message_4">ਆਪਣੇ ਸਾਰੇ ਕੰਮ ਲੜ੍ਹੀ-ਬੱਧ ਕਰੋ।</string>
     <string name="slogan_message_5">ਬੇਦਾਗ।</string>
     <string name="slogan_message_6">ਖ਼ਾਲੀ ਥਾਵਾਂ ਕਰੋ!</string>
     <string name="slogan_message_7">ਖ਼ਾਲੀ ਥਾਂ, ਸੁੱਖ ਦਾ ਸਾਹ।</string>
@@ -58,7 +57,6 @@
         <item quantity="one">%d ਅਸਫਲ</item>
         <item quantity="other">%d ਅਸਫਲ</item>
     </plurals>
-    <string name="x_space_can_be_freed">%s ਖ਼ਾਲੀ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ</string>
     <string name="general_info_label">ਜਾਣਕਾਰੀ</string>
     <string name="general_count_label">ਗਿਣਤੀ</string>
     <string name="general_app_label">ਐਪ</string>
@@ -79,8 +77,6 @@
     <string name="file_type_directory">ਡਾਇਰੈਕਟਰੀ</string>
     <string name="file_type_file">ਫਾਈਲ</string>
     <string name="file_type_unknown">ਅਗਿਆਤ</string>
-    <string name="general_timeunit_hours">ਘੰਟੇ</string>
-    <string name="general_timeunit_days">ਦਿਨ</string>
     <string name="general_progress_ready">ਤਿਆਰ</string>
     <string name="general_progress_done">ਮੁਕੰਮਲ</string>
     <string name="general_rom_type_auto_label">ਸਵੈਚਾਲਿਤ (ਮੂਲ)</string>

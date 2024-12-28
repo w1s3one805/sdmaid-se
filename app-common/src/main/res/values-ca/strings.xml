@@ -5,7 +5,6 @@
     <string name="slogan_message_1">Tot ben net i polit.</string>
     <string name="slogan_message_2">Prevenint el caos.</string>
     <string name="slogan_message_3">Fent el que cal.</string>
-    <string name="slogan_message_4">Tot en ordre.</string>
     <string name="slogan_message_5">Impecable.</string>
     <string name="slogan_message_6">Bytes, aneu-vos-en!</string>
     <string name="slogan_message_7">Espai alliberat, lloc per a la felicitat.</string>
@@ -76,7 +75,6 @@
     <string name="general_tag_filter_label">Filtra per etiquetes</string>
     <string name="general_result_success_message">Operació realitzada amb èxit</string>
     <string name="general_result_failure_message">Operació fallida</string>
-    <string name="general_result_x_space_freed">%s alliberats</string>
     <string name="general_options_label">Opcions</string>
     <string name="general_details_label">Detalls</string>
     <string name="general_view_action">Mostra</string>
@@ -90,9 +88,9 @@
     <string name="general_delete_confirmation_title">Confirmeu la supressió</string>
     <string name="general_delete_confirmation_message_x">Voleu suprimir «%s»?</string>
     <string name="general_delete_confirmation_message_selected_x_items">Voleu suprimir els %d elements seleccionats?</string>
-    <plurals name="general_delete_success_deleted_x_freed_y">
-        <item quantity="one">S\'ha suprimit %1$d element i s\'ha alliberat %2$s</item>
-        <item quantity="other">S\'han suprimit %1$d elements i s\'han alliberat %2$s</item>
+    <plurals name="general_delete_success_deleted_x">
+        <item quantity="one">S\'ha suprimit %d element.</item>
+        <item quantity="other">S\'han suprimit %d elements.</item>
     </plurals>
     <string name="general_remove_action">Elimina</string>
     <string name="general_remove_selected_action">Eliminar els seleccionats</string>
@@ -117,7 +115,10 @@
         <item quantity="one">%d ha fallat</item>
         <item quantity="other">%d han fallat</item>
     </plurals>
-    <string name="x_space_can_be_freed">Es poden alliberar %s</string>
+    <plurals name="x_space_can_be_freed">
+        <item quantity="one">Es pot alliberar %s</item>
+        <item quantity="other">Es poden alliberar %s</item>
+    </plurals>
     <string name="general_info_label">Info</string>
     <string name="general_count_label">Compta</string>
     <string name="general_app_label">Aplicació</string>
@@ -138,14 +139,21 @@
     <string name="file_type_directory">Directori</string>
     <string name="file_type_file">Fitxer</string>
     <string name="file_type_unknown">Desconegut</string>
-    <string name="general_timeunit_hours">Hores</string>
-    <string name="general_timeunit_days">Dies</string>
     <string name="general_progress_ready">A punt</string>
     <string name="general_progress_done">Fet</string>
     <string name="general_rom_type_auto_label">Automàtic (per defecte)</string>
+    <plurals name="general_age_days">
+        <item quantity="one">%d dia</item>
+        <item quantity="other">%d dies</item>
+    </plurals>
+    <plurals name="general_age_hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d hores</item>
+    </plurals>
     <plurals name="result_x_files">
         <item quantity="one">%s fitxer</item>
         <item quantity="other">%s fitxers</item>
     </plurals>
     <string name="general_advice_title">Consell</string>
+    <string name="general_error_invalid_input_label">Entrada no vàlida</string>
 </resources>
