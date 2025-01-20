@@ -60,6 +60,9 @@ class AlcatelSpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+
+        override val tag: String = TAG
+
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -77,11 +80,13 @@ class AlcatelSpecs @Inject constructor(
         run {
             val storageEntryLabels =
                 alcatelLabels.getStorageEntryDynamic() + alcatelLabels.getStorageEntryStatic(lang, script)
+            log(TAG) { "storageEntryLabels=$storageEntryLabels" }
 
             val storageFilter = onTheFlyLabler.getAOSPStorageFilter(storageEntryLabels, pkg)
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = tag,
+                descriptionInternal = "Storage entry",
                 label = R.string.appcleaner_automation_progress_find_storage.toCaString(storageEntryLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -97,6 +102,7 @@ class AlcatelSpecs @Inject constructor(
         run {
             val clearCacheButtonLabels =
                 alcatelLabels.getClearCacheDynamic() + alcatelLabels.getClearCacheStatic(lang, script)
+            log(TAG) { "clearCacheButtonLabels=$clearCacheButtonLabels" }
 
             val buttonFilter = fun(node: AccessibilityNodeInfo): Boolean {
                 if (!node.isClickyButton()) return false
@@ -104,7 +110,8 @@ class AlcatelSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = tag,
+                descriptionInternal = "Clear cache button",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowNodeTest = windowCriteriaAppIdentifier(SETTINGS_PKG, ipcFunnel, pkg),
                 nodeTest = buttonFilter,

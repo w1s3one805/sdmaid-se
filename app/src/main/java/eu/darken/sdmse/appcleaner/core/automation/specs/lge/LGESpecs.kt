@@ -37,7 +37,6 @@ import eu.darken.sdmse.common.hasApiLevel
 import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -60,6 +59,7 @@ class LGESpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -76,11 +76,13 @@ class LGESpecs @Inject constructor(
 
         run {
             val storageEntryLabels = lgeLabels.getStorageEntryDynamic() + lgeLabels.getStorageEntryLabels(lang, script)
+            log(TAG) { "storageEntryLabels=$storageEntryLabels" }
 
             val storageFilter = onTheFlyLabler.getAOSPStorageFilter(storageEntryLabels, pkg)
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Storage entry",
                 label = R.string.appcleaner_automation_progress_find_storage.toCaString(storageEntryLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -102,7 +104,8 @@ class LGESpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Clear cache",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowNodeTest = windowCriteriaAppIdentifier(SETTINGS_PKG, ipcFunnel, pkg),
                 nodeTest = buttonFilter,

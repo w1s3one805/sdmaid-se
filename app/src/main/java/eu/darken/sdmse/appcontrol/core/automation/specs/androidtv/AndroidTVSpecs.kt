@@ -38,7 +38,6 @@ import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.pkgs.toPkgId
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -61,6 +60,7 @@ open class AndroidTVSpecs @Inject constructor(
     }
 
     override suspend fun getForceStop(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -80,7 +80,8 @@ open class AndroidTVSpecs @Inject constructor(
 
         run {
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Force stop button",
                 label = R.string.appcontrol_automation_progress_find_force_stop.toCaString(forceStopLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -120,7 +121,8 @@ open class AndroidTVSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Confirm force stop",
                 label = R.string.appcleaner_automation_progress_find_ok_confirmation.toCaString(okLbl),
                 windowNodeTest = windowCriteria,
                 nodeTest = buttonFilter,

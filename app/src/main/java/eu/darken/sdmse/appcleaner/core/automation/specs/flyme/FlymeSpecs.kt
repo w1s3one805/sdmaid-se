@@ -34,7 +34,6 @@ import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.pkgs.toPkgId
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -58,6 +57,7 @@ class FlymeSpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -76,6 +76,7 @@ class FlymeSpecs @Inject constructor(
             // Do this beforehand so we crash early if unsupported
             val clearCacheButtonLabels =
                 flymeLabels.getClearCacheDynamic() + flymeLabels.getClearCacheLabels(lang, script)
+            log(TAG) { "clearCacheButtonLabels=$clearCacheButtonLabels" }
 
             if (clearCacheButtonLabels.isNotEmpty()) {
                 log(TAG, WARN) { "clearCacheButtonLabels was empty" }
@@ -90,7 +91,8 @@ class FlymeSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Clear cache button",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),

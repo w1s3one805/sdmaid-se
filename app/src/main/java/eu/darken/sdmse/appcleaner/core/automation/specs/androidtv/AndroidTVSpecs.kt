@@ -62,6 +62,7 @@ open class AndroidTVSpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -78,6 +79,7 @@ open class AndroidTVSpecs @Inject constructor(
 
         run {
             val clearCacheButtonLabels = androidTVLabels.getClearCacheLabels(lang, script)
+            log(TAG) { "clearCacheButtonLabels=$clearCacheButtonLabels" }
 
             if (clearCacheButtonLabels.isEmpty()) {
                 log(TAG, WARN) { "clearCacheButtonLabels was empty" }
@@ -90,7 +92,8 @@ open class AndroidTVSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Clear cache button",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -105,6 +108,7 @@ open class AndroidTVSpecs @Inject constructor(
 
         run {
             val clearCacheTexts = androidTVLabels.getClearCacheLabels(lang, script)
+            log(TAG) { "clearCacheTexts=$clearCacheTexts" }
 
             val windowCriteria = fun(node: AccessibilityNodeInfo): Boolean {
                 if (node.pkgId != SETTINGS_PKG) return false
@@ -136,7 +140,8 @@ open class AndroidTVSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Confirm action",
                 label = R.string.appcleaner_automation_progress_find_ok_confirmation.toCaString(buttonLabels),
                 windowNodeTest = windowCriteria,
                 nodeTest = buttonFilter,

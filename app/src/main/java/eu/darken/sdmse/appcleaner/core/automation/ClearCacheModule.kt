@@ -20,6 +20,7 @@ import eu.darken.sdmse.appcleaner.core.automation.specs.coloros.ColorOSSpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.flyme.FlymeSpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.honor.HonorSpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.huawei.HuaweiSpecs
+import eu.darken.sdmse.appcleaner.core.automation.specs.hyperos.HyperOsSpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.lge.LGESpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.miui.MIUISpecs
 import eu.darken.sdmse.appcleaner.core.automation.specs.nubia.NubiaSpecs
@@ -75,10 +76,11 @@ class ClearCacheModule @AssistedInject constructor(
     private fun getPriotizedSpecGenerators(): List<AppCleanerSpecGenerator> = specGenerators
         .get()
         .also { log(TAG) { "${it.size} step generators are available" } }
-        .onEach { log(TAG, VERBOSE) { "Loaded: $it" } }
+        .onEach { log(TAG, VERBOSE) { "Loaded: $it (${it.tag})" } }
         .sortedByDescending { generator: AppCleanerSpecGenerator ->
             when (generator) {
                 is MIUISpecs -> 190
+                is HyperOsSpecs -> 180
                 is SamsungSpecs -> 170
                 is AlcatelSpecs -> 160
                 is RealmeSpecs -> 150
@@ -192,10 +194,10 @@ class ClearCacheModule @AssistedInject constructor(
 
         val specGenerator = getPriotizedSpecGenerators().firstOrNull { it.isResponsible(pkg) }
             ?: getPriotizedSpecGenerators().single { it is AOSPSpecs }
-        log(TAG) { "Using spec generator: $specGenerator" }
+        log(TAG) { "Using spec generator: ${specGenerator.tag}" }
 
         val spec = specGenerator.getClearCache(pkg)
-        log(TAG) { "Generated spec for ${pkg.id} is $spec" }
+        log(TAG) { "Generated spec for ${pkg.id} is ${spec.tag}" }
 
         when (spec) {
             is AutomationSpec.Explorer -> processExplorerSpec(pkg, spec)

@@ -33,11 +33,11 @@ import eu.darken.sdmse.common.debug.logging.logTag
 import eu.darken.sdmse.common.device.DeviceDetective
 import eu.darken.sdmse.common.device.RomType
 import eu.darken.sdmse.common.funnel.IPCFunnel
+import eu.darken.sdmse.common.hasApiLevel
 import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.pkgs.toPkgId
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -61,6 +61,7 @@ class RealmeSpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -78,11 +79,13 @@ class RealmeSpecs @Inject constructor(
         run {
             val storageEntryLabels =
                 realmeLabels.getStorageEntryDynamic() + realmeLabels.getStorageEntryLabels(lang, script)
+            log(TAG) { "storageEntryLabels=$storageEntryLabels" }
 
             val storageFilter = onTheFlyLabler.getAOSPStorageFilter(storageEntryLabels, pkg)
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Storage entry",
                 label = R.string.appcleaner_automation_progress_find_storage.toCaString(storageEntryLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -98,17 +101,41 @@ class RealmeSpecs @Inject constructor(
         run {
             val clearCacheButtonLabels =
                 realmeLabels.getClearCacheDynamic() + realmeLabels.getClearCacheLabels(lang, script)
+            log(TAG) { "clearCacheButtonLabels=$clearCacheButtonLabels" }
 
-            val buttonFilter = fun(node: AccessibilityNodeInfo): Boolean {
-                if (!node.isClickyButton()) return false
-                return node.textMatchesAny(clearCacheButtonLabels)
+            var isUnclickableButton = false
+            val buttonFilter = when {
+                hasApiLevel(35) -> fun(node: AccessibilityNodeInfo): Boolean {
+                    if (!node.textMatchesAny(clearCacheButtonLabels)) return false
+                    isUnclickableButton = !node.isClickyButton()
+                    return true
+                }
+
+                else -> fun(node: AccessibilityNodeInfo): Boolean {
+                    return node.isClickyButton() && node.textMatchesAny(clearCacheButtonLabels)
+                }
             }
 
+
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Clear cache",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowNodeTest = windowCriteria(SETTINGS_PKG),
                 nodeTest = buttonFilter,
+                nodeMapping = when {
+                    hasApiLevel(35) -> {
+                        // Function that is evaluated later, has access to vars in this scope
+                        { node ->
+                            when {
+                                isUnclickableButton -> clickableParent().invoke(node)
+                                else -> node
+                            }
+                        }
+                    }
+
+                    else -> null
+                },
                 action = getAospClearCacheClick(pkg, tag)
             )
             stepper.withProgress(this) { process(step) }

@@ -39,7 +39,7 @@ class AutomationExplorer @AssistedInject constructor(
     }
 
     suspend fun process(spec: AutomationSpec.Explorer) {
-        log(TAG) { "process(): $spec" }
+        log(TAG) { "process(): ${spec.tag}" }
 
         var attempts = 0
 
@@ -57,6 +57,8 @@ class AutomationExplorer @AssistedInject constructor(
             override val host: AutomationHost = this@AutomationExplorer.host
 
             override val stepper: StepProcessor = stepProcessorFactory.create(host)
+
+            override fun toString(): String = "AutomationContext(host=$host, stepper=$stepper, attempts=$attempts)"
         }
 
         log(TAG, VERBOSE) { "Creating plan..." }

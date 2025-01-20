@@ -11,7 +11,6 @@ import eu.darken.sdmse.R
 import eu.darken.sdmse.appcontrol.core.automation.specs.AppControlSpecGenerator
 import eu.darken.sdmse.appcontrol.core.automation.specs.aosp.AOSPSpecs
 import eu.darken.sdmse.automation.core.common.StepProcessor
-import eu.darken.sdmse.automation.core.common.clickableParent
 import eu.darken.sdmse.automation.core.common.clickableSelfOrParent
 import eu.darken.sdmse.automation.core.common.crawl
 import eu.darken.sdmse.automation.core.common.defaultClick
@@ -38,7 +37,6 @@ import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.pkgs.toPkgId
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -60,6 +58,7 @@ class SamsungSpecs @Inject constructor(
     }
 
     override suspend fun getForceStop(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -79,16 +78,15 @@ class SamsungSpecs @Inject constructor(
 
         run {
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Force stop button",
                 label = R.string.appcontrol_automation_progress_find_force_stop.toCaString(forceStopLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(AOSPSpecs.SETTINGS_PKG),
                 windowNodeTest = windowCriteriaAppIdentifier(AOSPSpecs.SETTINGS_PKG, ipcFunnel, pkg),
-                nodeTest = storageFilter@{ node ->
-                    node.textMatchesAny(forceStopLabels)
-                },
+                nodeTest = storageFilter@{ node -> node.textMatchesAny(forceStopLabels) },
                 nodeRecovery = getDefaultNodeRecovery(pkg),
-                nodeMapping = clickableParent(),
+                nodeMapping = clickableSelfOrParent(),
                 action = defaultClick(onDisabled = {
                     wasDisabled = true
                     true
@@ -120,7 +118,8 @@ class SamsungSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Confirm force stop",
                 label = R.string.appcleaner_automation_progress_find_ok_confirmation.toCaString(titleLbl + okLbl),
                 windowNodeTest = windowCriteria,
                 nodeTest = buttonFilter,

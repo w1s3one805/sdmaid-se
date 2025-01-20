@@ -8,6 +8,7 @@ import android.os.Build
 import dagger.Reusable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import eu.darken.sdmse.common.debug.logging.logTag
+import eu.darken.sdmse.common.hasApiLevel
 import eu.darken.sdmse.common.isInstalled
 import javax.inject.Inject
 
@@ -23,9 +24,7 @@ class DeviceDetective @Inject constructor(
         val pm = context.packageManager
         @Suppress("DEPRECATION")
         if (pm.hasSystemFeature(PackageManager.FEATURE_TELEVISION)) return true
-        if (pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)) return true
-
-        return false
+        return pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
     }
 
     private fun checkManufactor(name: String): Boolean {
@@ -58,6 +57,8 @@ class DeviceDetective @Inject constructor(
         checkManufactor("meizu") && hasApp(FLYME_PKGS) -> RomType.FLYME
         checkManufactor("huawei") && hasApp(MIUI_PKGS) -> RomType.HUAWEI
         checkManufactor("lge") -> RomType.LGE
+        // HyperOS 1.0 is based on Android 14 / API34, so anything lower is likely a false positive of MIUI
+        checkManufactor("Xiaomi") && hasApiLevel(34) && hasApp(HYPEROS_PKGS) && hasFingerPrint(HYPEROS_VERSION_STARTS) -> RomType.HYPEROS
         checkManufactor("Xiaomi") && hasApp(MIUI_PKGS) && hasFingerPrint(MIUI_VERSION_STARTS) -> RomType.MIUI
         checkManufactor("nubia") -> RomType.NUBIA
         checkManufactor("OnePlus") -> RomType.ONEPLUS
@@ -88,6 +89,17 @@ class DeviceDetective @Inject constructor(
         private val MIUI_PKGS = setOf(
             "com.miui.securitycenter"
         )
+
+        val HYPEROS_VERSION_STARTS = setOf(
+            // OS1.0.12.0.ULLMIXM
+            "OS1",
+            // Xiaomi/corot_global/corot:15/AP3A.240617.008/OS2.0.6.0.VMLMIXM:user/release-keys
+            "OS2",
+        )
+        private val HYPEROS_PKGS = setOf(
+            "com.miui.securitycenter"
+        )
+
         private val FLYME_PKGS = setOf(
             "com.meizu.flyme.update"
         )

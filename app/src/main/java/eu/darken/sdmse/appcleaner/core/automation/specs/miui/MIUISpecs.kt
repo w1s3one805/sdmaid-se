@@ -73,6 +73,7 @@ class MIUISpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -87,7 +88,8 @@ class MIUISpecs @Inject constructor(
         var windowPkg: Pkg.Id? = null
 
         val step = StepProcessor.Step(
-            parentTag = TAG,
+            source = TAG,
+            descriptionInternal = "Storage entry (main plan)",
             label = R.string.appcleaner_automation_progress_find_storage.toCaString(""),
             windowIntent = defaultWindowIntent(pkg),
             windowEventFilter = { event ->
@@ -137,7 +139,8 @@ class MIUISpecs @Inject constructor(
             val storageFilter = onTheFlyLabler.getAOSPStorageFilter(storageEntryLabels, pkg)
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Storage entry (settings plan)",
                 label = R.string.appcleaner_automation_progress_find_storage.toCaString(storageEntryLabels),
                 nodeTest = storageFilter,
                 nodeRecovery = getDefaultNodeRecovery(pkg),
@@ -157,7 +160,8 @@ class MIUISpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = TAG,
+                descriptionInternal = "Clear cache (settings plan)",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 nodeTest = buttonFilter,
                 action = getAospClearCacheClick(pkg, tag)
@@ -177,8 +181,11 @@ class MIUISpecs @Inject constructor(
         log(VERBOSE) { "Getting specs for ${pkg.packageName} (lang=$lang, script=$script, country=$country)" }
 
         val clearDataLabels = miuiLabels.getClearDataButtonLabels(lang, script, country)
+        log(TAG) { "clearDataLabels=$clearDataLabels" }
         val clearCacheLabels = miuiLabels.getClearCacheButtonLabels(lang, script, country)
+        log(TAG) { "clearCacheLabels=$clearCacheLabels" }
         val dialogTitles = miuiLabels.getDialogTitles(lang, script, country)
+        log(TAG) { "clearCacheLabels=$clearCacheLabels" }
 
         var useAlternativeStep = deviceAdminManager.getDeviceAdmins().contains(pkg.id).also {
             if (it) log(TAG) { "${pkg.id} is a device admin, using alternative step directly." }
@@ -202,7 +209,8 @@ class MIUISpecs @Inject constructor(
                 return@filter false
             }
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Clear data (security center plan)",
                 label = R.string.appcleaner_automation_progress_find_clear_data.toCaString(clearDataLabels),
                 windowNodeTest = windowCriteriaAppIdentifier(SETTINGS_PKG_MIUI, ipcFunnel, pkg),
                 nodeTest = clearDataFilter,
@@ -219,7 +227,8 @@ class MIUISpecs @Inject constructor(
 
         if (useAlternativeStep) {
             val alternativeStep: StepProcessor.Step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Clear cache (alternative security center plan)",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheLabels),
                 windowNodeTest = windowCriteriaAppIdentifier(SETTINGS_PKG_MIUI, ipcFunnel, pkg),
                 nodeTest = when {
@@ -256,7 +265,8 @@ class MIUISpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Clear cache (security center plan)",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheLabels),
                 windowNodeTest = windowCriteria,
                 nodeTest = entryFilter,
@@ -294,7 +304,8 @@ class MIUISpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = TAG,
+                source = TAG,
+                descriptionInternal = "Confirm clear cache (security center plan)",
                 label = R.string.appcleaner_automation_progress_find_ok_confirmation.toCaString(""),
                 windowNodeTest = windowCriteria,
                 nodeTest = buttonFilter,

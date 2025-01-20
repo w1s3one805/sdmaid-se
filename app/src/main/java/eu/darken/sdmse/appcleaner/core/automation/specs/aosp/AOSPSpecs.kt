@@ -36,7 +36,6 @@ import eu.darken.sdmse.common.pkgs.features.Installed
 import eu.darken.sdmse.common.pkgs.toPkgId
 import eu.darken.sdmse.common.progress.withProgress
 import eu.darken.sdmse.main.core.GeneralSettings
-import java.util.*
 import javax.inject.Inject
 
 @Reusable
@@ -59,6 +58,7 @@ class AOSPSpecs @Inject constructor(
     }
 
     override suspend fun getClearCache(pkg: Installed): AutomationSpec = object : AutomationSpec.Explorer {
+        override val tag: String = TAG
         override suspend fun createPlan(): suspend AutomationExplorer.Context.() -> Unit = {
             mainPlan(pkg)
         }
@@ -76,11 +76,13 @@ class AOSPSpecs @Inject constructor(
         run {
             val storageEntryLabels =
                 aospLabels.getStorageEntryDynamic() + aospLabels.getStorageEntryStatic(lang, script)
+            log(TAG) { "storageEntryLabels=$storageEntryLabels" }
 
             val storageFilter = onTheFlyLabler.getAOSPStorageFilter(storageEntryLabels, pkg)
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = tag,
+                descriptionInternal = "Storage entry",
                 label = R.string.appcleaner_automation_progress_find_storage.toCaString(storageEntryLabels),
                 windowIntent = defaultWindowIntent(pkg),
                 windowEventFilter = defaultWindowFilter(SETTINGS_PKG),
@@ -96,6 +98,7 @@ class AOSPSpecs @Inject constructor(
         run {
             val clearCacheButtonLabels =
                 aospLabels.getClearCacheDynamic() + aospLabels.getClearCacheStatic(lang, script)
+            log(TAG) { "clearCacheButtonLabels=$clearCacheButtonLabels" }
 
             val buttonFilter = fun(node: AccessibilityNodeInfo): Boolean {
                 if (!node.isClickyButton()) return false
@@ -103,7 +106,8 @@ class AOSPSpecs @Inject constructor(
             }
 
             val step = StepProcessor.Step(
-                parentTag = tag,
+                source = tag,
+                descriptionInternal = "Clear cache button",
                 label = R.string.appcleaner_automation_progress_find_clear_cache.toCaString(clearCacheButtonLabels),
                 windowNodeTest = windowCriteriaAppIdentifier(SETTINGS_PKG, ipcFunnel, pkg),
                 nodeTest = buttonFilter,
